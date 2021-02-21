@@ -22,7 +22,6 @@ services:
     ports:
       - '5432:5432'
 
-
   redis:
     image: redis
     restart: always
@@ -34,7 +33,7 @@ services:
   celery:
     build: .
     container_name: 'celery_container'
-    command: celery -A config worker --beat --scheduler django --loglevel=info
+    command: celery -A boilerplate_project worker -l info --beat --scheduler django --loglevel=info
     env_file:
       - ./.env
     volumes:
@@ -47,9 +46,8 @@ services:
 
   flower:
     image: mher/flower:0.9.5
-    environment:
-      - CELERY_BROKER_URL=redis://redis_container:6379/0
-      - FLOWER_PORT=8888
+    env_file:
+      - ./.env
     ports:
       - 8888:8888
 

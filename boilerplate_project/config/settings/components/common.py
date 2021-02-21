@@ -1,17 +1,19 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # -----------------------------------------------------------------------------
 # COMMON SETTINGS
 # -----------------------------------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', default='secret-key')
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'boilerplate_project.config.urls'
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'boilerplate_project.config.wsgi.application'
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,17 +44,13 @@ STATICFILES_DIRS = [
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 # -----------------------------------------------------------------------------
+DEFAULT_DB = 'postgres://postgres@db_container/postgres'
 
 DATABASES = {
-    'default': os.environ.get(
-        'DATABASE_URL',
-        default=('postgres://db_container@127.0.0.1/db_container')),
+    'default': dj_database_url.config(default=DEFAULT_DB, conn_max_age=600)
 }
-
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 300000
-
 # -----------------------------------------------------------------------------
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

@@ -20,8 +20,13 @@ LOCAL_APPS = []
 # THIRD PARTY APPS
 # -----------------------------------------------------------------------------
 THIRD_PARTY_APPS = [
-    'cors_headers',
     'rest_framework',
+    'corsheaders',
+    'django_celery_results',
+    'django_celery_beat',
+    'rest_framework.authtoken',
+    # 'django_json_widget',
+    'easy_select2',
     'admin_reorder',
 ]
 
